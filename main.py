@@ -1,6 +1,6 @@
 from src.test import mypy_print
-from src.utils.clearConsole import clearConsole
+from src.utils.clear_console import clear_console
 
 mypy_print("test")
-clearConsole()
+clear_console()
 mypy_print("test2")

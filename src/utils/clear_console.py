@@ -1,7 +1,7 @@
 from os import system, name
 
 
-def clearConsole():
+def clear_console():
     if name == "nt":
         system("cls")
     else:
