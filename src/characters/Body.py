@@ -12,5 +12,5 @@ class Body(Generic[T]):
         self.left_leg = left_leg
         self.right_leg = right_leg
 
-    def get_array_of_values(self) -> tuple[T, T, T, T, T, T]:
+    def get_tuple_of_values(self) -> tuple[T, T, T, T, T, T]:
         return self.head, self.left_arm, self.chest, self.right_arm, self.left_leg, self.right_leg
