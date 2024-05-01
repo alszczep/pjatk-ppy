@@ -1,4 +1,4 @@
-from src.chances.do_chances_add_up_to_one import validate_if_chances_add_up_to_one
+from src.chances.validate_if_chances_add_up_to_one import validate_if_chances_add_up_to_one
 from src.characters.Body import Body
 from src.characters.Character import Character
 
