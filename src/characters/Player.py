@@ -1,6 +1,12 @@
 from src.characters.Body import Body
 from src.characters.Character import Character
 from src.characters.leveling import exp_to_level
+from src.utils.fix_round_off import fix_round_off
+
+HEALTH_PER_SKILL_POINT = 20
+ATTACK_PER_SKILL_POINT = 6
+DEFENSE_PER_SKILL_POINT = 2
+CRIT_CHANCE_PER_SKILL_POINT = 0.01
 
 
 class Player(Character):
@@ -28,30 +34,45 @@ class Player(Character):
             self.defense += (1 * levels_up)
             self.skill_points += (1 * levels_up)
 
-    def spend_skill_point(self):
-        if self.skill_points == 0:
+    def spend_skill_points(self, amount_to_spend: int = 1):
+        if amount_to_spend <= 0:
+            return
+        
+        if self.skill_points < amount_to_spend:
             raise ValueError("Not enough skill points")
 
-        self.skill_points -= 1
+        self.skill_points -= amount_to_spend
 
-    def upgrade_health(self):
-        self.spend_skill_point()
-        self.health += 20
+    def upgrade_health(self, amount_to_spend: int = 1):
+        if amount_to_spend <= 0:
+            return
 
-    def upgrade_attack(self):
-        self.spend_skill_point()
-        self.attack += 6
+        self.spend_skill_points(amount_to_spend)
+        self.health += (HEALTH_PER_SKILL_POINT * amount_to_spend)
 
-    def upgrade_defense(self):
-        self.spend_skill_point()
-        self.defense += 2
+    def upgrade_attack(self, amount_to_spend: int = 1):
+        if amount_to_spend <= 0:
+            return
 
-    def upgrade_crit_chance(self):
+        self.spend_skill_points(amount_to_spend)
+        self.attack += (ATTACK_PER_SKILL_POINT * amount_to_spend)
+
+    def upgrade_defense(self, amount_to_spend: int = 1):
+        if amount_to_spend <= 0:
+            return
+
+        self.spend_skill_points(amount_to_spend)
+        self.defense += (DEFENSE_PER_SKILL_POINT * amount_to_spend)
+
+    def upgrade_crit_chance(self, amount_to_spend: int = 1):
+        if amount_to_spend <= 0:
+            return
+
         if self.crit_chance >= 0.5:
             raise ValueError("Crit chance is already maxed out")
 
-        self.spend_skill_point()
-        self.crit_chance += 0.01
+        self.spend_skill_points(amount_to_spend)
+        self.crit_chance = fix_round_off(self.crit_chance + CRIT_CHANCE_PER_SKILL_POINT * amount_to_spend)
 
     def gain_exp(self, exp: int):
         if exp <= 0:

@@ -1,5 +1,6 @@
 from src.game.Game import Game
 from src.location.locations import locations
+from src.ui.CharacterPage import CharacterPage
 from src.ui.MenuSelect import MenuSelect
 
 
@@ -16,3 +17,7 @@ def mk_hunt_locations_page(game: Game):
     options.append(("Back", game.go_to_main_menu))
 
     return MenuSelect(game, "[Hunt Locations]", tuple(options))
+
+
+def mk_character_page(game: Game):
+    return CharacterPage(game)
