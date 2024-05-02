@@ -1,11 +1,13 @@
 from curses import wrapper  # type: ignore
 from typing import Any
 
+from _curses import curs_set  # type: ignore
+
 from src.characters.Player import Player
 from src.game.Game import Game
 from src.game.GameState import GameState
 from src.ui.UiPage import UiPage
-from src.ui.ui_pages import mk_main_menu_page, mk_hunt_locations_page, mk_character_page
+from src.ui.ui_pages import mk_main_menu_page, mk_hunt_locations_page, mk_character_page, mk_fight_page
 
 
 def main(screen: Any):
@@ -14,6 +16,8 @@ def main(screen: Any):
 
     current_page: UiPage | None = None
     current_state: GameState | None = None
+
+    curs_set(0)
 
     while True:
         screen.clear()
@@ -30,8 +34,8 @@ def main(screen: Any):
                     current_page = mk_hunt_locations_page(game)
                 case GameState.CHARACTER:
                     current_page = mk_character_page(game)
-                # case GameState.FIGHT:
-                #     current_page = mk_fight_page(game)
+                case GameState.FIGHT:
+                    current_page = mk_fight_page(game)
 
         if current_page is None:
             raise ValueError("Page has to be set")

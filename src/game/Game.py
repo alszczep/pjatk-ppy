@@ -1,3 +1,5 @@
+from src.chances.element_by_chance import element_by_chance
+from src.characters.Enemy import Enemy
 from src.characters.Player import Player
 from src.game.GameState import GameState
 from src.game.InvalidStateChangeError import InvalidStateChangeError
@@ -8,13 +10,18 @@ class Game:
     def __init__(self, player: Player):
         self.__state = GameState.MAIN_MENU
         self.__player = player
-        self.__current_location: Location | None = None
+        self.__enemy: Enemy | None = None
 
     def get_state(self):
         return self.__state
 
     def get_player(self):
         return self.__player
+
+    def get_enemy(self):
+        if self.__enemy is None:
+            raise ValueError("Enemy should be set before starting a fight")
+        return self.__enemy
 
     def go_to_hunt(self):
         if self.__state != GameState.MAIN_MENU:
@@ -27,7 +34,7 @@ class Game:
             raise InvalidStateChangeError(self.__state.name, GameState.FIGHT.name)
 
         self.__state = GameState.FIGHT
-        self.__current_location = location
+        self.__enemy = element_by_chance(tuple(location.enemies))
 
     def go_to_fight_finished(self):
         if self.__state != GameState.FIGHT:

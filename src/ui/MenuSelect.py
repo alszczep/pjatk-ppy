@@ -23,7 +23,7 @@ class MenuSelect(UiPage):
         elif key == "KEY_UP":
             self.__currentItem -= 1
             if self.__currentItem < 0:
-                self.__currentItem = len(self.items)
+                self.__currentItem = len(self.items) - 1
 
     def render(self, screen):
         items_offset = 0
