@@ -6,8 +6,6 @@ from src.characters.leveling import exp_to_level
 class Player(Character):
     def __init__(self, name: str, health: int, attack: int, defense: int,
                  crit_chance: float, exp: int, skill_points: int):
-        if exp <= 0:
-            raise ValueError("Experience reward must be greater than 0")
         if skill_points < 0:
             raise ValueError("Skill points must be greater or equal to 0")
 

@@ -12,3 +12,5 @@ elvenFortress = Location(
     11,
     20,
     [(0.7, elfArcher), (0.3, elfAssassin)])
+
+locations = (forest, elvenFortress)
