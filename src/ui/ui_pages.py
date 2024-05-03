@@ -1,6 +1,7 @@
 from src.game.Game import Game
 from src.location.locations import locations
 from src.ui.CharacterPage import CharacterPage
+from src.ui.FightFinishedPage import FightFinishedPage
 from src.ui.FightPage import FightPage
 from src.ui.MenuSelect import MenuSelect
 
@@ -28,3 +29,7 @@ def mk_character_page(game: Game):
 
 def mk_fight_page(game: Game):
     return FightPage(game)
+
+
+def mk_fight_finished_page(game: Game):
+    return FightFinishedPage(game)

@@ -3,8 +3,12 @@ from src.characters.Character import Character
 from src.characters.leveling import exp_to_level
 from src.utils.fix_round_off import fix_round_off
 
-HEALTH_PER_SKILL_POINT = 20
-ATTACK_PER_SKILL_POINT = 6
+HEALTH_PER_LEVEL = 10
+ATTACK_PER_LEVEL = 2
+DEFENSE_PER_LEVEL = 1
+
+HEALTH_PER_SKILL_POINT = 15
+ATTACK_PER_SKILL_POINT = 4
 DEFENSE_PER_SKILL_POINT = 2
 CRIT_CHANCE_PER_SKILL_POINT = 0.01
 
@@ -29,15 +33,15 @@ class Player(Character):
             levels_up = new_level - self.level
 
             self.level = new_level
-            self.health += (10 * levels_up)
-            self.attack += (3 * levels_up)
-            self.defense += (1 * levels_up)
+            self.health += (HEALTH_PER_LEVEL * levels_up)
+            self.attack += (ATTACK_PER_LEVEL * levels_up)
+            self.defense += (DEFENSE_PER_LEVEL * levels_up)
             self.skill_points += (1 * levels_up)
 
     def spend_skill_points(self, amount_to_spend: int = 1):
         if amount_to_spend <= 0:
             return
-        
+
         if self.skill_points < amount_to_spend:
             raise ValueError("Not enough skill points")
 

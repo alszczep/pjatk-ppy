@@ -24,6 +24,9 @@ class Game:
             raise ValueError("Enemy should be set before starting a fight")
         return self.__enemy
 
+    def get_exp_gained(self):
+        return self.__exp_gained
+
     def go_to_hunt(self):
         if self.__state != GameState.MAIN_MENU:
             raise InvalidStateChangeError(self.__state.name, GameState.HUNT_LOCATIONS.name)

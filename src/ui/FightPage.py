@@ -16,6 +16,8 @@ class FightPage(UiPage):
 
         self.__current_option_index = BodyParts.HEAD
 
+        self.__turn = 0
+
     def handle_key(self, key: str):
         if key == "\n":
             player = self.__game.get_player()
@@ -34,6 +36,7 @@ class FightPage(UiPage):
                 self.__last_round_enemy_log = handle_fight_turn_result.enemy_turn.log
                 self.__in_fight_player_health -= handle_fight_turn_result.enemy_turn.damage_dealt
 
+            self.__turn += 1
             return
 
         match self.__current_option_index:
@@ -111,8 +114,10 @@ class FightPage(UiPage):
         write_from_the_back(0, enemy.name)
         write_from_the_back(1, "Health: {0}/{1}".format(str(self.__in_fight_enemy_health), str(enemy.health)))
 
-        screen.addstr(3, 0, self.__last_round_player_log)
-        screen.addstr(4, 0, self.__last_round_enemy_log)
+        if self.__turn > 0:
+            screen.addstr(3, 0, "Turn {0}:".format(self.__turn))
+            screen.addstr(4, 0, self.__last_round_player_log)
+            screen.addstr(5, 0, self.__last_round_enemy_log)
 
         #               ╭─────╮
         #               │  X  │
@@ -131,12 +136,12 @@ class FightPage(UiPage):
         left_leg_sign = "X" if self.__current_option_index == BodyParts.LEFT_LEG else " "
         right_leg_sign = "X" if self.__current_option_index == BodyParts.RIGHT_LEG else " "
 
-        screen.addstr(6, 27, "╭─────╮")
-        screen.addstr(7, 27, "│  {0}  │".format(head_sign))
-        screen.addstr(8, 27, "╰─────╯")
-        screen.addstr(9, 19, "╭─────╮ ╭─────╮ ╭─────╮")
-        screen.addstr(10, 19, "│  {0}  │ │  {1}  │ │  {2}  │".format(left_arm_sign, chest_sign, right_arm_sign))
-        screen.addstr(11, 19, "╰─────╯ ╰─────╯ ╰─────╯")
-        screen.addstr(12, 22, "╭─────╮   ╭─────╮")
-        screen.addstr(13, 22, "│  {0}  │   │  {1}  │".format(left_leg_sign, right_leg_sign))
-        screen.addstr(14, 22, "╰─────╯   ╰─────╯")
+        screen.addstr(7, 27, "╭─────╮")
+        screen.addstr(8, 27, "│  {0}  │".format(head_sign))
+        screen.addstr(9, 27, "╰─────╯")
+        screen.addstr(10, 19, "╭─────╮ ╭─────╮ ╭─────╮")
+        screen.addstr(11, 19, "│  {0}  │ │  {1}  │ │  {2}  │".format(left_arm_sign, chest_sign, right_arm_sign))
+        screen.addstr(12, 19, "╰─────╯ ╰─────╯ ╰─────╯")
+        screen.addstr(13, 22, "╭─────╮   ╭─────╮")
+        screen.addstr(14, 22, "│  {0}  │   │  {1}  │".format(left_leg_sign, right_leg_sign))
+        screen.addstr(15, 22, "╰─────╯   ╰─────╯")
