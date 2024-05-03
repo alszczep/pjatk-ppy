@@ -1,16 +1,7 @@
-from enum import Enum
-
+from src.characters.BodyParts import BodyParts
 from src.game.Game import Game
+from src.game.handle_fight_turn import handle_fight_turn, FightTurnResult
 from src.ui.UiPage import UiPage
-
-
-class AttackOptions(Enum):
-    HEAD = 0
-    LEFT_ARM = 1
-    CHEST = 2
-    RIGHT_ARM = 3
-    LEFT_LEG = 4
-    RIGHT_LEG = 5
 
 
 class FightPage(UiPage):
@@ -23,78 +14,93 @@ class FightPage(UiPage):
         self.__last_round_player_log = ""
         self.__last_round_enemy_log = ""
 
-        self.__current_option_index = AttackOptions.HEAD
+        self.__current_option_index = BodyParts.HEAD
 
     def handle_key(self, key: str):
         if key == "\n":
-            # attack
-            self.__in_fight_enemy_health -= 10
+            player = self.__game.get_player()
+            enemy = self.__game.get_enemy()
+
+            handle_fight_turn_result = handle_fight_turn(player, enemy, self.__in_fight_player_health,
+                                                         self.__in_fight_enemy_health, self.__current_option_index)
+
+            if handle_fight_turn_result.result == FightTurnResult.ENEMY_KILLED:
+                self.__game.go_to_fight_finished(enemy.exp_reward)
+            elif handle_fight_turn_result.result == FightTurnResult.PLAYER_KILLED:
+                self.__game.go_to_fight_finished(None)
+            else:
+                self.__last_round_player_log = handle_fight_turn_result.player_turn.log
+                self.__in_fight_enemy_health -= handle_fight_turn_result.player_turn.damage_dealt
+                self.__last_round_enemy_log = handle_fight_turn_result.enemy_turn.log
+                self.__in_fight_player_health -= handle_fight_turn_result.enemy_turn.damage_dealt
+
+            return
 
         match self.__current_option_index:
-            case AttackOptions.HEAD:
+            case BodyParts.HEAD:
                 match key:
                     case "KEY_DOWN":
-                        self.__current_option_index = AttackOptions.CHEST
+                        self.__current_option_index = BodyParts.CHEST
                     case "KEY_RIGHT":
-                        self.__current_option_index = AttackOptions.RIGHT_ARM
+                        self.__current_option_index = BodyParts.RIGHT_ARM
                     case "KEY_LEFT":
-                        self.__current_option_index = AttackOptions.LEFT_ARM
+                        self.__current_option_index = BodyParts.LEFT_ARM
                     case "KEY_UP":
-                        self.__current_option_index = AttackOptions.LEFT_LEG
-            case AttackOptions.LEFT_ARM:
+                        self.__current_option_index = BodyParts.LEFT_LEG
+            case BodyParts.LEFT_ARM:
                 match key:
                     case "KEY_DOWN":
-                        self.__current_option_index = AttackOptions.LEFT_LEG
+                        self.__current_option_index = BodyParts.LEFT_LEG
                     case "KEY_RIGHT":
-                        self.__current_option_index = AttackOptions.CHEST
+                        self.__current_option_index = BodyParts.CHEST
                     case "KEY_LEFT":
-                        self.__current_option_index = AttackOptions.RIGHT_ARM
+                        self.__current_option_index = BodyParts.RIGHT_ARM
                     case "KEY_UP":
-                        self.__current_option_index = AttackOptions.HEAD
-            case AttackOptions.CHEST:
+                        self.__current_option_index = BodyParts.HEAD
+            case BodyParts.CHEST:
                 match key:
                     case "KEY_DOWN":
-                        self.__current_option_index = AttackOptions.LEFT_LEG
+                        self.__current_option_index = BodyParts.LEFT_LEG
                     case "KEY_RIGHT":
-                        self.__current_option_index = AttackOptions.RIGHT_ARM
+                        self.__current_option_index = BodyParts.RIGHT_ARM
                     case "KEY_LEFT":
-                        self.__current_option_index = AttackOptions.LEFT_ARM
+                        self.__current_option_index = BodyParts.LEFT_ARM
                     case "KEY_UP":
-                        self.__current_option_index = AttackOptions.HEAD
-            case AttackOptions.RIGHT_ARM:
+                        self.__current_option_index = BodyParts.HEAD
+            case BodyParts.RIGHT_ARM:
                 match key:
                     case "KEY_DOWN":
-                        self.__current_option_index = AttackOptions.RIGHT_LEG
+                        self.__current_option_index = BodyParts.RIGHT_LEG
                     case "KEY_RIGHT":
-                        self.__current_option_index = AttackOptions.LEFT_ARM
+                        self.__current_option_index = BodyParts.LEFT_ARM
                     case "KEY_LEFT":
-                        self.__current_option_index = AttackOptions.CHEST
+                        self.__current_option_index = BodyParts.CHEST
                     case "KEY_UP":
-                        self.__current_option_index = AttackOptions.HEAD
-            case AttackOptions.LEFT_LEG:
+                        self.__current_option_index = BodyParts.HEAD
+            case BodyParts.LEFT_LEG:
                 match key:
                     case "KEY_DOWN":
-                        self.__current_option_index = AttackOptions.HEAD
+                        self.__current_option_index = BodyParts.HEAD
                     case "KEY_RIGHT":
-                        self.__current_option_index = AttackOptions.RIGHT_LEG
+                        self.__current_option_index = BodyParts.RIGHT_LEG
                     case "KEY_LEFT":
-                        self.__current_option_index = AttackOptions.RIGHT_LEG
+                        self.__current_option_index = BodyParts.RIGHT_LEG
                     case "KEY_UP":
-                        self.__current_option_index = AttackOptions.CHEST
-            case AttackOptions.RIGHT_LEG:
+                        self.__current_option_index = BodyParts.CHEST
+            case BodyParts.RIGHT_LEG:
                 match key:
                     case "KEY_DOWN":
-                        self.__current_option_index = AttackOptions.HEAD
+                        self.__current_option_index = BodyParts.HEAD
                     case "KEY_RIGHT":
-                        self.__current_option_index = AttackOptions.LEFT_LEG
+                        self.__current_option_index = BodyParts.LEFT_LEG
                     case "KEY_LEFT":
-                        self.__current_option_index = AttackOptions.LEFT_LEG
+                        self.__current_option_index = BodyParts.LEFT_LEG
                     case "KEY_UP":
-                        self.__current_option_index = AttackOptions.CHEST
+                        self.__current_option_index = BodyParts.CHEST
 
     def render(self, screen):
         def write_from_the_back(row_index: int, text: str):
-            screen.addstr(row_index, 59 - len(text), text)
+            screen.addstr(row_index, 60 - len(text), text)
 
         player = self.__game.get_player()
         enemy = self.__game.get_enemy()
@@ -118,12 +124,12 @@ class FightPage(UiPage):
         #          │  X  │   │  X  │
         #          ╰─────╯   ╰─────╯
 
-        head_sign = "X" if self.__current_option_index == AttackOptions.HEAD else " "
-        left_arm_sign = "X" if self.__current_option_index == AttackOptions.LEFT_ARM else " "
-        chest_sign = "X" if self.__current_option_index == AttackOptions.CHEST else " "
-        right_arm_sign = "X" if self.__current_option_index == AttackOptions.RIGHT_ARM else " "
-        left_leg_sign = "X" if self.__current_option_index == AttackOptions.LEFT_LEG else " "
-        right_leg_sign = "X" if self.__current_option_index == AttackOptions.RIGHT_LEG else " "
+        head_sign = "X" if self.__current_option_index == BodyParts.HEAD else " "
+        left_arm_sign = "X" if self.__current_option_index == BodyParts.LEFT_ARM else " "
+        chest_sign = "X" if self.__current_option_index == BodyParts.CHEST else " "
+        right_arm_sign = "X" if self.__current_option_index == BodyParts.RIGHT_ARM else " "
+        left_leg_sign = "X" if self.__current_option_index == BodyParts.LEFT_LEG else " "
+        right_leg_sign = "X" if self.__current_option_index == BodyParts.RIGHT_LEG else " "
 
         screen.addstr(6, 27, "╭─────╮")
         screen.addstr(7, 27, "│  {0}  │".format(head_sign))

@@ -1,16 +1,21 @@
 from typing import Generic, TypeVar
 
+from src.characters.BodyParts import BodyParts
+
 T = TypeVar('T')
 
 
 class Body(Generic[T]):
     def __init__(self, head: T, left_arm: T, chest: T, right_arm: T, left_leg: T, right_leg: T):
-        self.head = head
-        self.left_arm = left_arm
-        self.chest = chest
-        self.right_arm = right_arm
-        self.left_leg = left_leg
-        self.right_leg = right_leg
+        self.values = {
+            BodyParts.HEAD: head,
+            BodyParts.LEFT_ARM: left_arm,
+            BodyParts.CHEST: chest,
+            BodyParts.RIGHT_ARM: right_arm,
+            BodyParts.LEFT_LEG: left_leg,
+            BodyParts.RIGHT_LEG: right_leg
+        }
 
     def get_tuple_of_values(self) -> tuple[T, T, T, T, T, T]:
-        return self.head, self.left_arm, self.chest, self.right_arm, self.left_leg, self.right_leg
+        return (self.values[BodyParts.HEAD], self.values[BodyParts.LEFT_ARM], self.values[BodyParts.CHEST],
+                self.values[BodyParts.RIGHT_ARM], self.values[BodyParts.LEFT_LEG], self.values[BodyParts.RIGHT_LEG])

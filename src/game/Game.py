@@ -11,6 +11,7 @@ class Game:
         self.__state = GameState.MAIN_MENU
         self.__player = player
         self.__enemy: Enemy | None = None
+        self.__exp_gained: int | None = None
 
     def get_state(self):
         return self.__state
@@ -36,9 +37,11 @@ class Game:
         self.__state = GameState.FIGHT
         self.__enemy = element_by_chance(tuple(location.enemies))
 
-    def go_to_fight_finished(self):
+    def go_to_fight_finished(self, exp_gained: int | None):
         if self.__state != GameState.FIGHT:
             raise InvalidStateChangeError(self.__state.name, GameState.FIGHT_FINISHED.name)
+
+        self.__exp_gained = exp_gained
 
         self.__state = GameState.FIGHT_FINISHED
 
@@ -53,6 +56,9 @@ class Game:
                 and self.__state != GameState.HUNT_LOCATIONS
                 and self.__state != GameState.FIGHT_FINISHED):
             raise InvalidStateChangeError(self.__state.name, GameState.MAIN_MENU.name)
+
+        if self.__state == GameState.FIGHT_FINISHED:
+            self.__exp_gained = None
 
         self.__state = GameState.MAIN_MENU
 

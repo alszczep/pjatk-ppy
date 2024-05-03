@@ -1,5 +1,7 @@
+from src.chances.element_by_chance import element_by_chance
 from src.chances.validate_if_chances_add_up_to_one import validate_if_chances_add_up_to_one
 from src.characters.Body import Body
+from src.characters.BodyParts import BodyParts
 from src.characters.Character import Character
 
 
@@ -13,3 +15,7 @@ class Enemy(Character):
         self.attack_chances = attack_chances
         self.exp_reward = exp_reward
         Character.__init__(self, name, health, attack, defense, dodge_chances, crit_chance)
+
+    def get_attacked_body_part(self) -> BodyParts:
+        attack_chances = tuple(map(lambda i: (i[1], i[0]), self.attack_chances.values.items()))
+        return element_by_chance(attack_chances)
