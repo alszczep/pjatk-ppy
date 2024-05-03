@@ -4,6 +4,7 @@ from src.characters.Player import HEALTH_PER_SKILL_POINT, CRIT_CHANCE_PER_SKILL_
     ATTACK_PER_SKILL_POINT
 from src.characters.leveling import level_to_exp
 from src.game.Game import Game
+from src.persistence.save_player import save_player
 from src.ui.UiPage import UiPage
 from src.utils.fix_round_off import fix_round_off
 
@@ -145,6 +146,8 @@ class CharacterPage(UiPage):
         player.upgrade_attack(self.__points_in_attack)
         player.upgrade_defense(self.__points_in_defense)
         player.upgrade_crit_chance(self.__points_in_crit_chance)
+
+        save_player(player)
 
         self.reset_state()
 
