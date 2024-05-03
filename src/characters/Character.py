@@ -2,9 +2,9 @@ from typing import TypeVar
 
 from src.chances.chance_to_outcome import chance_to_outcome
 from src.chances.validate_if_chance_is_valid import validate_if_chance_is_valid
-from src.characters.Attack import Attack, AttackResult
-from src.characters.Body import Body
-from src.characters.BodyParts import BodyParts
+from src.characters.body.Body import Body
+from src.characters.body.BodyParts import BodyParts
+from src.game.fight.Attack import Attack, AttackResult
 
 TCharacter = TypeVar('TCharacter', bound='Character')
 

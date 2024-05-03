@@ -1,10 +1,10 @@
 from enum import Enum
 
-from src.characters.Attack import AttackResult
-from src.characters.BodyParts import BodyParts
 from src.characters.Character import Character
-from src.characters.Enemy import Enemy
 from src.characters.Player import Player
+from src.characters.body.BodyParts import BodyParts
+from src.characters.enemies.Enemy import Enemy
+from src.game.fight.Attack import AttackResult
 
 
 class FightSingleTurn:

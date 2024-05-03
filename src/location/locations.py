@@ -1,4 +1,4 @@
-from src.characters.enemies import wolf, elfArcher, bear, elfAssassin
+from src.characters.enemies.enemies import wolf, elfArcher, bear, elfAssassin
 from src.location.Location import Location
 
 forest = Location(

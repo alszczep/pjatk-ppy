@@ -1,6 +1,6 @@
-from src.characters.BodyParts import BodyParts
+from src.characters.body.BodyParts import BodyParts
 from src.game.Game import Game
-from src.game.handle_fight_turn import handle_fight_turn, FightTurnResult
+from src.game.fight.handle_fight_turn import handle_fight_turn, FightTurnResult
 from src.ui.UiPage import UiPage
 
 

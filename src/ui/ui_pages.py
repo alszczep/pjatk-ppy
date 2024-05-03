@@ -1,9 +1,9 @@
 from src.game.Game import Game
 from src.location.locations import locations
-from src.ui.CharacterPage import CharacterPage
-from src.ui.FightFinishedPage import FightFinishedPage
-from src.ui.FightPage import FightPage
 from src.ui.MenuSelect import MenuSelect
+from src.ui.pages.CharacterPage import CharacterPage
+from src.ui.pages.FightFinishedPage import FightFinishedPage
+from src.ui.pages.FightPage import FightPage
 
 
 def mk_main_menu_page(game: Game):

@@ -1,8 +1,8 @@
 from src.chances.element_by_chance import element_by_chance
 from src.chances.validate_if_chances_add_up_to_one import validate_if_chances_add_up_to_one
-from src.characters.Body import Body
-from src.characters.BodyParts import BodyParts
 from src.characters.Character import Character
+from src.characters.body.Body import Body
+from src.characters.body.BodyParts import BodyParts
 
 
 class Enemy(Character):

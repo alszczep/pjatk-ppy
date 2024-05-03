@@ -12,7 +12,7 @@ from src.ui.ui_pages import mk_main_menu_page, mk_hunt_locations_page, mk_charac
 
 
 def main(screen: Any):
-    player = Player("Player", 500, 50, 20, 0.1, 0, 0)
+    player = Player("Player", 500, 40, 20, 0.1, 0, 0)
     game = Game(player)
 
     current_page: UiPage | None = None

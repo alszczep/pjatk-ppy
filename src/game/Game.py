@@ -1,6 +1,6 @@
 from src.chances.element_by_chance import element_by_chance
-from src.characters.Enemy import Enemy
 from src.characters.Player import Player
+from src.characters.enemies.Enemy import Enemy
 from src.game.GameState import GameState
 from src.game.InvalidStateChangeError import InvalidStateChangeError
 from src.location.Location import Location

@@ -1,5 +1,5 @@
 from src.chances.validate_if_chances_add_up_to_one import validate_if_chances_add_up_to_one
-from src.characters.Enemy import Enemy
+from src.characters.enemies.Enemy import Enemy
 
 
 class Location:

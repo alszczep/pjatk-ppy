@@ -1,5 +1,5 @@
-from src.characters.Body import Body
 from src.characters.Character import Character
+from src.characters.body.Body import Body
 from src.characters.leveling import exp_to_level
 from src.utils.fix_round_off import fix_round_off
 

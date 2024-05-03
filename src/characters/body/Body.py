@@ -1,6 +1,6 @@
 from typing import Generic, TypeVar
 
-from src.characters.BodyParts import BodyParts
+from src.characters.body.BodyParts import BodyParts
 
 T = TypeVar('T')
 

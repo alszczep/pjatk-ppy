@@ -1,5 +1,5 @@
-from src.characters.Body import Body
-from src.characters.Enemy import Enemy
+from src.characters.body.Body import Body
+from src.characters.enemies.Enemy import Enemy
 
 wolf = Enemy(
     "Wolf",
