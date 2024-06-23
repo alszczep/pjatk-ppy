@@ -1,4 +1,4 @@
-# pjatk-ppy
+# pjatk-ppy-text-rpg
 
 Console RPG game made using python [curses](https://docs.python.org/3/library/curses.html)
 
